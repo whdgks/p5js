@@ -1,12 +1,14 @@
 let scene = -1;
 let trashList = [];
 let maxTrash = 50;
-let trashAddInterval = 20;
+let trashAddInterval = 10;
 let trashCount = 0;
 let flyRoom;
 let maxFlies = 50;
 let flyAddInterval = 10;
 let doorOpen = false;
+let textDisable = 0;
+let ballDisable = 0;
 
 //쓰레기
 let handPose;
@@ -115,6 +117,7 @@ function keyPressed() {
   }
   if (key === 's' || key === 'S') {
     scene = 6;
+    textDisable = 1;
   }
  
 }
@@ -184,6 +187,7 @@ function mousePressed() {
   let trashWidth = width / 2;
   let trashHeight = 200;
 
+
   if (mouseX > trashX && mouseX < trashX + trashWidth &&
       mouseY > trashY && mouseY < trashY + trashHeight + 40) {
     scene = 4;
@@ -195,6 +199,9 @@ function mousePressed() {
     scene = 1;
   }
   if(scene === 3 && mouseX < width/10 && mouseY < height/10){
+    scene = 1;
+  }
+  if(scene === 6 && mouseX < width/10 && mouseY < height/10){
     scene = 1;
   }
 }
@@ -212,6 +219,18 @@ function drawRoomWithTrash() {
     t.display();
   }
   pop();
+  
+
+
+  push();
+  fill(0);
+  textSize(15);
+  textAlign(CENTER, CENTER);
+  if (textDisable === 0) {
+    text("파리가 나오면 s를 누르세요", 100, 15);
+  }
+  pop();
+
 }
 
 function drawRoomBackground() {
@@ -228,10 +247,12 @@ function drawRoomBackground() {
   quad(width*0.17, height - floorHeight - 50, width*0.83, height - floorHeight - 50, width, height, 0, height);
 
   // 벽선
+  push();
   stroke(floorColor);
   strokeWeight(3);
   line(width*0.17, height - floorHeight - 50, width*0.17, 0);
   line(width*0.83, height - floorHeight - 50, width*0.83, 0);
+  pop();
 
   // 싱크대
   fill(245);
@@ -477,6 +498,13 @@ function drawAngryapart(){
   textAlign(CENTER, CENTER);
   text("시작하기", 50, 30);
   
+  push();
+  fill(0);
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  text("첫번째로 쓰레기를 눌러 치우고, 두번째로 싱크대를 눌러 설거지를 하세요!", width/2 , 20);
+  pop();
+
   
 }
 
@@ -614,17 +642,27 @@ function drawShinyEye(x, y, eyeSize, pupilSize, highlightSize) {
 //박종한
 function awayGarbage() {
   // 영상 좌우반전 출력
-  /*
   push();
   translate(width, 0);
   scale(-1, 1);
   image(video, 0, 0, width, height);
   pop();
-  */
   push();
-  background(255);
+  fill(0);
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  text("손으로 공을 잡아서 오른쪽 하단으로 움직이세요.", width/2, 30);
   pop();
-
+  fill(255, 0, 0);
+  rect(10, 10, 200, 40, 10);
+  fill(255);
+  textSize(16);
+  textAlign(CENTER, CENTER);
+  text("공이 없어졌으면 돌아가기", 115, 30);
+  push();
+  fill(255);
+  rect(width - 500, height - 500, 500);
+  pop();
   isGrabbing = false;
   let stateText = "폄";
 
@@ -648,6 +686,10 @@ function awayGarbage() {
 
   drawBall();
   showHandStateText(stateText);
+  if (ball.x > width - 500 && ball.y > height - 500)
+  {
+    ballDisable = 1;
+  }
 }
 
 // 👇 손가락 관절 시각화
@@ -671,9 +713,11 @@ function checkGrabbing(k) {
 
 // 👇 공을 그리기
 function drawBall() {
-  fill(0);
-  noStroke();
-  rect(ball.x, ball.y, ball.r * 2);
+  if (ballDisable === 0) {
+    fill(0);
+    noStroke();
+    circle(ball.x, ball.y, ball.r * 2);
+  }
 }
 
 // 👇 손 상태 텍스트 출력
@@ -731,6 +775,7 @@ function gotHands(results) {
 let firsttime = 0;
 
 function washDish() {
+  push();
   if (firsttime === 0) {
     setupStain();
     firsttime = 1;
@@ -787,7 +832,12 @@ function washDish() {
     textAlign(CENTER, CENTER);
     textSize(48);
     text("설거지 끝!", width / 2, height / 2);
+    text("N을 누르세요!!!!!", width / 2, 30);
+
+
   }
+  
+  pop();
 }
 
 function drawPlate() {

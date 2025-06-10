@@ -1,11 +1,11 @@
 let scene = -1;
 let trashList = [];
 let maxTrash = 50;
-let trashAddInterval = 10;
+let trashAddInterval = 4;
 let trashCount = 0;
 let flyRoom;
 let maxFlies = 50;
-let flyAddInterval = 20;
+let flyAddInterval = 4;
 let doorOpen = false;
 let textDisable = 0;
 let ballDisable = 0;
@@ -62,7 +62,7 @@ let stainLayer;
 let cleared = false;
 
 let plateCount = 0;
-let maxPlates = 3;
+let maxPlates = 2;
 let finishedPlates = [];
 
 let Handpose = {
@@ -90,13 +90,57 @@ credits = [
     "",
     "양시영",
     "",
+    "Created with Visual Studio",
+    "",
+    "이한민",
+    "안녕하세요, 이한민입니다. 이번이 저희의",
+    "첫 팀플이라 처음엔 여러 가지로 어려움이 많았어요.",
+    "하지만 저희 팀은 코딩, 디자인, 기획 모든 부분에",
+    "골고루 힘쓰며, 서로 도우면서 최선을 다했습니다.",
+    "누구 하나 게으름 피우지 않고 적극적으로 참여해",
+    "의견 조율도 잘 이루어졌고, 어려운 점도 함께 극복할",
+    "수 있었어요. 이번 경험을 통해 ",
+    "협업의 중요성을 깊이 배웠습니다.",
+    "",
+    "박종한",
+    "첫 팀플이라 낯설고 힘든 부분이 많았지만",
+    "저희 조에서 서로의 부족한 점을 채워주며 균형있게",
+    "작업했습니다. 덕분에 프로젝트를 하는 동안 즐거웠고",
+    "어려운 순간이 있을 때에도 함께 넘길 수 있었던 것 같습니다.",
+    "이번 경험을 통해 협동을 배울 수 있었고",
+    "앞으로 더 잘해보고 싶은 마음이 커졌습니다.",
+    "",
+    "양시영",
+    "저희 모두가 서로 배려하며 함께 노력하니 팀 분위기도 좋아지고",
+    "결과물도 만족스러웠습니다.",
+    "이번 팀플을 통해 협업의 진정한 의미와 책임감을 깨달았습니다.",
+    "앞으로는 더 체계적이고 효율적으로 함께 일하며 성장해 나가고 싶습니다.",
+    "",
+    "",
+    "AI 사용률 0%....??",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "일 뻔한 AI 사용률 75%",
+    "",
     "Special Thanks",
     "Professor Jung",
     "",
-    "Created with Visual Studio",
+    "감사합니다 ^~^",
     "",
     "The End"];
-
 
 
 function setup() {
@@ -124,9 +168,13 @@ function draw() {
     drawStartScreen();
   } else if (scene === 0) {
     image(roomIng, 0, 0, width, height);
-    fill(0);
-    textSize(20);
+    push();
+    stroke(0);
+    strokeWeight(4);
+    fill(255);
+    textSize(80);
     text(" 아 귀찮아..\n 나중에 치우지 뭐", width/2, height/2);
+    pop();
   } else if (scene === 1) {
     drawRoomWithTrash();
     if (frameCount % trashAddInterval === 0 && trashCount < maxTrash && ballDisable === 0) {
@@ -167,7 +215,7 @@ function endingCredits() {
     text(credits[i], width / 2, textY);
   }
 
-  y -= 1;
+  y -= 3;
   pop();
 }
 
@@ -298,10 +346,16 @@ function drawRoomWithTrash() {
   for (let t of trashList) {
     t.display();
   }
+ 
   fill(0);
   textSize(15);
   if (textDisable === 0) {
-    text("파리가 나오면 s를 누르세요", 100, 15);
+    push();
+    stroke(0);
+    fill(255);
+    rect(10, 10, 200, 40, 10);
+    pop();
+    text("파리가 나오면 s를 누르세요", 110, 30);
   }
   pop();
 }
@@ -403,6 +457,14 @@ function drawSunlightEnding() {
   fill(80, 40, 20);
   textSize(32);
   text("청소를 미루지 않고, 재때재때 하면 \n\n나는 물론 모두가 행복해질거야!", width / 2, height / 2);
+  push();
+  stroke(0);
+  fill(255);
+  rect(10, 10, 80, 40, 10);
+  fill(0);
+  textSize(16);
+  text("p을 눌러\n 크레딧보기", 50, 30); 
+  pop(); 
 }
 
 
@@ -412,35 +474,42 @@ function drawAngryapart(){
   push();
   fill(255, 0, 0);
   textSize(170);
-  text("좀 치워라!",width/2, height/2);
+  text("좀 치워라!!",width/2, height/2);
   pop();
   
-  fill(255, 0, 0);
-  rect(10, 10, 80, 40, 10);
   fill(255);
+  rect(10, 10, 80, 40, 10);
+  fill(0);
   textSize(16);
   text("시작하기", 50, 30);
   
   push();
-  fill(0);
+  stroke(0);
+  strokeWeight(2);
+  fill(255);
   textSize(40);
-  text("첫번째로 쓰레기를 눌러 치우고, 두번째로 싱크대를 눌러 설거지를 하세요!", width/2 , 20);
+  text("\n첫번째로 쓰레기를 눌러 치우고, 두번째로 화장실을 눌러 밀린 빨래를 하세요.\n마지막으로 싱크대를 눌러 설거지를 하세요!", width/2 , height - 100);
   pop();
 }
 
 function drawHappyapart(){
   image(happyImg, 0, 0, width, height);
   push();
-  fill(0, 0, 255);
+  stroke(0);
+  strokeWeight(3);
+  fill(102, 255, 255);
   textSize(180);
   text("상쾌해!",width/2, height/2);
   pop();
   
-  fill(0);
-  rect(10, 10, 80, 40, 10);
+  push();
+  stroke(0);
   fill(255);
+  rect(10, 10, 80, 40, 10);
+  fill(0);
   textSize(16);
   text("m을 눌러\n 엔딩보기", 50, 30);  
+  pop();
 }
 
 //박종한
@@ -456,21 +525,20 @@ function awayGarbage() {
   textSize(40);
   text("손으로 공을 잡아서 오른쪽 하단으로 움직이세요.", width/2, 30);
   pop();
-  fill(255, 0, 0);
-  rect(10, 10, 200, 40, 10);
   fill(255);
+  rect(10, 10, 200, 40, 10);
+  fill(0);
   textSize(16);
-  text("공이 없어졌으면 돌아가기", 115, 30);
+  text("쓰레기를 버렸다면 돌아가기", 115, 30);
   push();
   fill(255);
   image(trachBoxImg, width - 400, height - 500, 500, 500);
   pop();
-  let stateText;
 
   hands.forEach(function(hand) {
     let k = hand.keypoints;
   
-    // 👇 좌우 반전된 손 좌표 생성
+    // 좌우 반전된 손 좌표 생성
     let mirroredKeypoints = k.map(function(pt) {
       return {
         x: width - pt.x,
@@ -483,7 +551,6 @@ function awayGarbage() {
       isGrabbing = true;
       imageMode(CENTER);
       image(closeHandImg, mirroredKeypoints[9].x, mirroredKeypoints[9].y, 450, 450);
-      stateText = "쥠";
       pop();
     }
     else
@@ -492,7 +559,6 @@ function awayGarbage() {
       isGrabbing = false;
       imageMode(CENTER);
       image(openHandImg, mirroredKeypoints[9].x, mirroredKeypoints[9].y, 450, 450);
-      stateText = "폄";
       pop();
     }
 
@@ -500,7 +566,6 @@ function awayGarbage() {
   });
 
   drawBall();
-  showHandStateText(stateText);
   //쓰레기 지우기
   if (ball.x > width - 500 && ball.y > height - 500)
   {
@@ -510,7 +575,7 @@ function awayGarbage() {
 
 
 
-// 👇 손이 쥐는 상태인지 확인
+// 손이 쥐는 상태인지 확인
 function checkGrabbing(k) {
   if (!k || k.length < 17) return false;
   return (
@@ -520,7 +585,7 @@ function checkGrabbing(k) {
   );
 }
 
-// 👇 쓰레기을 그리리기
+// 쓰레기을 그리리기
 function drawBall() {
   if (ballDisable === 0) {
     push();
@@ -528,19 +593,12 @@ function drawBall() {
     fill(0);
     noStroke();
     image(trashImg, ball.x, ball.y);
-    circle(ball.x, ball.y, ball.r * 2);
     pop();
   }
 }
 
-// 👇 손 상태 텍스트 출력
-function showHandStateText(stateText) {
-  fill(255, 0, 0);
-  textSize(32);
-  text(stateText, 20, 40);
-}
 
-// 👇 공이 손 안에 있는지 확인
+// 공이 손 안에 있는지 확인
 function ballInHand(k, bx, by) {
   if (!k || k.length < 18) return false;
   return (
@@ -552,7 +610,7 @@ function ballInHand(k, bx, by) {
 }
 
 
-// 👇 손과 공의 상호작용 처리
+// 손과 공의 상호작용 처리
 function handleBallInteraction(k) {
   if (!k || k.length < 18) return;
 
@@ -576,7 +634,7 @@ function handleBallInteraction(k) {
 }
 
 
-// 👇 손 인식 결과 처리
+// 손 인식 결과 처리
 function gotHands(results) {
   hands = results;
 }
@@ -696,7 +754,7 @@ function isCleanedEnough() {
     alphaSum += img.pixels[i];
   }
   let avgAlpha = alphaSum / (img.pixels.length / 4);
-  return avgAlpha < 1;
+  return avgAlpha < 1.3;
 }
 
 //빨래
@@ -738,11 +796,12 @@ function cleanClothes() {
     ellipse(centerX-40, (height / 2)+30, b.size);
   }
   push();
-  fill(255, 0, 0);
-  rect(10, 10, 200, 40, 10);
   fill(255);
+  rect(10, 10, 200, 40, 10);
+  fill(0);
   textSize(16);
   text("빨래 다하면 돌아가기", 115, 30);
+  text("방향키(왼/오)번갈아 누르며 얼룩을 지우세요.", width/2, 30);
   pop();
   push();
   imageMode(CENTER); 
